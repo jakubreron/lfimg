@@ -22,12 +22,10 @@ batorcat() {
 	fi
 }
 
-glowormdcat() {
+mdcatorbat() {
 	file="$1"
 	shift
-	if command -v glow > /dev/null 2>&1; then
-		glow "$file"
-        elif command -v mdcat > /dev/null 2>&1; then
+        if command -v mdcat > /dev/null 2>&1; then
 		mdcat "$file"
         else
                 batorcat "$file"
@@ -42,7 +40,7 @@ case "$(printf "%s\n" "$(readlink -f "$1")" | awk '{print tolower($0)}')" in
 	*.zip|*.jar|*.war|*.ear|*.oxt) unzip -l "$1" ;;
 	*.gz) gzip -l "$1" ;;
 	*.rar) unrar l "$1" ;;
-	*.md|*README*) glowormdcat "$1";;
+	*.md) mdcatorbat "$1";;
 	*.7z) 7z l "$1" ;;
 	*.[1-8]) man "$1" | col -b ;;
 	*.o) nm "$1";;
